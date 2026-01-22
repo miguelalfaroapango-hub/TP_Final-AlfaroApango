@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap' rel='stylesheet'>
+    <title>Arena de Batalla - Imperio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #3a2a1a 0%, #5c4a3a 50%, #3a2a1a 100%);
+            background-attachment: fixed;
+            color: #f4e4c1;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .game-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 3rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+        .back-link {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-link a {
+            color: #f4e4c1;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        .back-link a:hover {
+            color: #d4af37;
+        }
+        .stats-container {
+            background: rgba(26, 15, 8, 0.9);
+            border: 3px solid #8b6914;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .stats-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.8rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        .stat-box {
+            background: rgba(139, 105, 20, 0.2);
+            border: 2px solid #8b6914;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #f4e4c1;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            color: #d4af37;
+            font-weight: 700;
+        }
+        .civilizations-container {
+            background: rgba(26, 15, 8, 0.9);
+            border: 3px solid #8b6914;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.8rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .civ-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .civ-card {
+            background: rgba(139, 105, 20, 0.2);
+            border: 3px solid #8b6914;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .civ-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        .civ-card.selected {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.3);
+        }
+        .civ-name {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.5rem;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        .civ-info {
+            font-size: 0.9rem;
+            color: #f4e4c1;
+            margin-bottom: 8px;
+        }
+        .btn-battle {
+            width: 100%;
+            max-width: 400px;
+            display: block;
+            margin: 30px auto 0;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4c1 100%);
+            color: #1a0f08;
+            border: 3px solid #d4af37;
+            padding: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+        }
+        .btn-battle:hover {
+            background: linear-gradient(135deg, #f4e4c1 0%, #d4af37 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+        .btn-battle:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-ranking {
+            display: inline-block;
+            background: rgba(139, 105, 20, 0.5);
+            color: #d4af37;
+            border: 2px solid #8b6914;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .btn-ranking:hover {
+            background: rgba(212, 175, 55, 0.3);
+            color: #f4e4c1;
+            border-color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1 class='game-title'>⚔️ Arena de Batalla ⚔️</h1>
+        
+        <div class='back-link'>
+            <a href='{% url "home" %}'>← Volver al Imperio</a> | 
+            <a href='{% url "ranking" %}' class='btn-ranking'>🏆 Ver Ranking</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-{{ message.tags }}' style='text-align: center; margin-bottom: 20px;'>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Estadísticas del jugador -->
+        <div class='stats-container'>
+            <h2 class='stats-title'>Tus Estadísticas</h2>
+            <div class='stats-grid'>
+                <div class='stat-box'>
+                    <div class='stat-label'>Victorias</div>
+                    <div class='stat-value' style='color: #4caf50;'>{{ estadisticas.victorias }}</div>
+                </div>
+                <div class='stat-box'>
+                    <div class='stat-label'>Derrotas</div>
+                    <div class='stat-value' style='color: #f44336;'>{{ estadisticas.derrotas }}</div>
+                </div>
+                <div class='stat-box'>
+                    <div class='stat-label'>Empates</div>
+                    <div class='stat-value' style='color: #ff9800;'>{{ estadisticas.empates }}</div>
+                </div>
+                <div class='stat-box'>
+                    <div class='stat-label'>Puntos</div>
+                    <div class='stat-value'>{{ estadisticas.puntos }}</div>
+                </div>
+                <div class='stat-box'>
+                    <div class='stat-label'>% Victoria</div>
+                    <div class='stat-value' style='font-size: 1.5rem;'>{{ estadisticas.porcentaje_victorias }}%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Selección de civilización -->
+        <div class='civilizations-container'>
+            <h2 class='section-title'>Elige Tu Civilización</h2>
+            
+            <form method='POST' action='{% url "iniciar_batalla" %}' id='battleForm'>
+                {% csrf_token %}
+                <input type='hidden' name='civilizacion_id' id='civilizacion_id' value=''>
+                
+                <div class='civ-grid'>
+                    {% for civ in civilizaciones %}
+                    <div class='civ-card' onclick='selectCivilization({{ civ.id }}, this)'>
+                        <div class='civ-name'>{{ civ.nombre }}</div>
+                        <div class='civ-info'><strong>Unidad:</strong> {{ civ.unidad_especial }}</div>
+                        <div class='civ-info'><strong>Fortaleza:</strong> {{ civ.fortaleza|truncatewords:10 }}</div>
+                    </div>
+                    {% empty %}
+                    <p style='text-align: center; color: #f4e4c1;'>No hay civilizaciones disponibles. <a href='{% url "crear_culturas" %}' style='color: #d4af37;'>Crea una aquí</a></p>
+                    {% endfor %}
+                </div>
+                
+                <button type='submit' class='btn-battle' id='battleBtn' disabled>
+                    ⚔️ INICIAR BATALLA ⚔️
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function selectCivilization(id, element) {
+            // Remover selección previa
+            document.querySelectorAll('.civ-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Seleccionar la nueva
+            element.classList.add('selected');
+            
+            // Actualizar input hidden
+            document.getElementById('civilizacion_id').value = id;
+            
+            // Habilitar botón
+            document.getElementById('battleBtn').disabled = false;
+        }
+    </script>
+</body>
+</html>

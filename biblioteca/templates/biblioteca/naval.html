@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidades Navales</title>
+    <style>
+        body {
+            font-family: 'Bai Jamjuree', 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #001f3f 0%, #003d5c 25%, #002a4a 50%, #003d5c 75%, #001f3f 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Botón Home estilo naval */
+        .nav-link {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(145deg, #e1f5ff 0%, #b3d9f2 100%);
+            color: #003d5c;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 10px;
+            border: 3px solid #24A2D9;
+            border-left: 8px solid #0077b6;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(36,162,217,0.1) 2px,
+                rgba(36,162,217,0.1) 4px
+            );
+            pointer-events: none;
+            border-radius: 10px;
+        }
+        
+        .nav-link::after {
+            content: '⚓';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            opacity: 0.6;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(36,162,217,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+            background: linear-gradient(145deg, #ffffff 0%, #e1f5ff 100%);
+        }
+        
+        .nav-link:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        h1 {
+            color: #24A2D9;
+            text-align: center;
+            font-size: 3em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 25px rgba(36,162,217,0.5);
+            margin-bottom: 40px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-bottom: 3px solid #24A2D9;
+            padding-bottom: 20px;
+        }
+        
+        /* Estilos del buscador */
+        .search-container {
+            background: linear-gradient(145deg, #e1f5ff 0%, #b3d9f2 100%);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            border: 3px solid #24A2D9;
+            border-left: 8px solid #0077b6;
+            position: relative;
+        }
+        
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(36,162,217,0.05) 2px,
+                rgba(36,162,217,0.05) 4px
+            );
+            pointer-events: none;
+            border-radius: 15px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .search-label {
+            color: #003d5c;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 3px solid #24A2D9;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            color: #003d5c;
+            font-family: 'Bai Jamjuree', serif;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #0077b6;
+            background: #fff;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(36,162,217,0.3);
+        }
+        
+        .search-button {
+            padding: 15px 35px;
+            background: linear-gradient(145deg, #24A2D9 0%, #0077b6 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        
+        .search-button:hover {
+            background: linear-gradient(145deg, #48b9e5 0%, #24A2D9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(36,162,217,0.5);
+        }
+        
+        .search-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .clear-button {
+            padding: 15px 25px;
+            background: linear-gradient(145deg, #003d5c 0%, #001f3f 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+        
+        .clear-button:hover {
+            background: linear-gradient(145deg, #00507a 0%, #003d5c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .search-result-info {
+            margin-top: 15px;
+            color: #003d5c;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .unidad-naval {
+            background: linear-gradient(145deg, #e1f5ff 0%, #b3d9f2 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            border: 3px solid #24A2D9;
+            border-left: 8px solid #0077b6;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .unidad-naval:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(36,162,217,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+        
+        .unidad-naval::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(36,162,217,0.05) 2px,
+                rgba(36,162,217,0.05) 4px
+            );
+            pointer-events: none;
+            border-radius: 10px;
+        }
+        
+        .unidad-naval h2 {
+            color: #003d5c;
+            margin-top: 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            border-bottom: 2px solid #0077b6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .unidad-naval strong {
+            color: #0077b6;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .unidad-naval p {
+            margin: 12px 0;
+            line-height: 1.8;
+            color: #003d5c;
+            font-size: 1.1em;
+            padding-left: 10px;
+            border-left: 3px solid #0077b6;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 10px;
+            border-radius: 4px;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #24A2D9;
+            font-size: 1.5em;
+            margin-top: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            background: rgba(0,31,63,0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #24A2D9;
+        }
+        
+        .unidad-naval::after {
+            content: '⚓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            opacity: 0.3;
+            color: #24A2D9;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .search-button, .clear-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <a class='nav-link' href="{% url 'home' %}">Home</a>
+        
+        <h1>⚓ Unidades Navales ⚓</h1>
+        
+        <!-- Formulario de búsqueda -->
+        <div class='search-container'>
+            <form method='GET' action='' class='search-form'>
+                <label for='search' class='search-label'>🔍 Buscar:</label>
+                <input 
+                    type='text' 
+                    id='search'
+                    name='unidad' 
+                    class='search-input' 
+                    placeholder='Escribe el nombre de la unidad naval...'
+                    value='{{ request.GET.unidad }}'
+                    autofocus
+                >
+                <button type='submit' class='search-button'>🚢 Buscar</button>
+                {% if request.GET.unidad %}
+                    <a href="{% url 'naval_list' %}" class='clear-button'>✖ Limpiar</a>
+                {% endif %}
+            </form>
+            
+            {% if request.GET.unidad %}
+                <div class='search-result-info'>
+                    ⚓ Buscando: "{{ request.GET.unidad }}" - Se encontraron {{ unidades_navales|length }} resultado(s)
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if unidades_navales %}
+            {% for unidad in unidades_navales %}
+                <div class='unidad-naval'>
+                    <h2>{{unidad.unidad}}</h2>
+                    
+                    {% if unidad.no_unidades %}
+                        <p><strong>🔢 Número de Unidades:</strong> {{unidad.no_unidades}}</p>
+                    {% endif %}
+                    
+                    {% if unidad.civilizacion %}
+                        <p><strong>🏛️ Civilización:</strong> {{unidad.civilizacion}}</p>
+                    {% endif %}
+                    
+                    {% if unidad.descripcion %}
+                        <p><strong>📜 Descripción:</strong> {{unidad.descripcion}}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if request.GET.unidad %}
+                <p class='no-data'>❌ No se encontraron unidades navales con "{{ request.GET.unidad }}"</p>
+            {% else %}
+                <p class='no-data'>No hay unidades navales registradas aún.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

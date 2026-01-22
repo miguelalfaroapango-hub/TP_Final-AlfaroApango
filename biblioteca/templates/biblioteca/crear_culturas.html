@@ -1,0 +1,145 @@
+{% extends 'biblioteca/index.html'%}
+
+{% block titulo %} <title>biblioteca - crear culturas</title> {% endblock %}
+
+{% block Bienvenido %}
+<section class='hero-section'>
+    <div class='hero-content' style='max-width: 800px;'>
+        <h1 class='hero-title'>⚔ Crear Nueva Cultura ⚔</h1>
+        <div class='decorative-line'></div>
+        <p class='hero-text' style='font-size: 1.2rem; margin-bottom: 30px;'>
+            Registra una nueva civilización y sus características de batalla
+        </p>
+        <div class='decorative-line'></div>
+        
+        <!-- Formulario -->
+        <form method='POST' style='margin-top: 40px; text-align: left;'>
+            {% csrf_token %}
+            
+            <div class='mb-4'>
+                <label for='id_nombre' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    🏛 Nombre de la Cultura
+                </label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.nombre.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='mb-4'>
+                <label for='id_unidad_especial' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    ⭐ Unidad Especial
+                </label>
+                {{ form.unidad_especial }}
+                {% if form.unidad_especial.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.unidad_especial.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='mb-4'>
+                <label for='id_unidad' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    🗡 Unidad Principal
+                </label>
+                {{ form.unidad }}
+                {% if form.unidad.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.unidad.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='mb-4'>
+                <label for='id_fortaleza' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    🛡 Fortaleza
+                </label>
+                {{ form.fortaleza }}
+                {% if form.fortaleza.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.fortaleza.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='mb-4'>
+                <label for='id_bonificacion' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    ✨ Bonificación
+                </label>
+                {{ form.bonificacion }}
+                {% if form.bonificacion.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.bonificacion.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='mb-4'>
+                <label for='id_debilidades' class='form-label' style='color: #d4af37; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;'>
+                    ⚠ Debilidades
+                </label>
+                {{ form.debilidades }}
+                {% if form.debilidades.errors %}
+                    <div class='text-danger mt-2' style='color: #ff6b6b !important;'>
+                        {{ form.debilidades.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class='decorative-line' style='margin: 35px auto;'></div>
+            
+            <!-- Botones -->
+            <div class='d-flex justify-content-center gap-3 mt-4'>
+                <button type='submit' class='btn btn-lg' style='background: linear-gradient(135deg, #d4af37, #8b6914); border: 2px solid #d4af37; color: #1a0f08; font-weight: 700; padding: 12px 40px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);'>
+                    ⚔ Crear Cultura
+                </button>
+                <a href='{% url "civilizaciones_list" %}' class='btn btn-lg' style='background: rgba(92, 74, 58, 0.8); border: 2px solid #5c4a3a; color: #f4e4c1; font-weight: 700; padding: 12px 40px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;'>
+                    ↩ Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+<style>
+    .form-control {
+        background: rgba(26, 15, 8, 0.6) !important;
+        border: 2px solid #5c4a3a !important;
+        color: #f4e4c1 !important;
+        padding: 12px 15px !important;
+        border-radius: 8px !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-control:focus {
+        background: rgba(26, 15, 8, 0.8) !important;
+        border-color: #d4af37 !important;
+        color: #f4e4c1 !important;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.3) !important;
+        outline: none !important;
+    }
+    
+    .form-control::placeholder {
+        color: rgba(244, 228, 193, 0.5) !important;
+    }
+    
+    textarea.form-control {
+        min-height: 100px !important;
+        resize: vertical !important;
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6) !important;
+    }
+    
+    .form-label {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        margin-bottom: 10px;
+        display: block;
+    }
+</style>
+{% endblock %}

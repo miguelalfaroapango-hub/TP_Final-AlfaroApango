@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap' rel='stylesheet'>
+    <title>Guía de Unidades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #2d1810 0%, #5c4a3a 50%, #2d1810 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            color: #f4e4c1;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Botón Home estilo medieval */
+        .nav-link {
+            display: inline-block;
+            padding: 15px 40px;
+            background: rgba(26, 15, 8, 0.9);
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 15px;
+            border: 3px solid #8b6914;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .nav-link::before {
+            content: '🏰';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            background: rgba(26, 15, 8, 1);
+        }
+        
+        .nav-link:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            font-family: 'MedievalSharp', cursive;
+            color: #d4af37;
+            text-align: center;
+            font-size: 3rem;
+            margin: 30px 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+        .intro {
+            background: rgba(26, 15, 8, 0.9);
+            border: 3px solid #8b6914;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .intro p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #f4e4c1;
+        }
+        .unidad-card {
+            background: rgba(26, 15, 8, 0.9);
+            border: 3px solid #8b6914;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        .unidad-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+        }
+        .unidad-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #8b6914;
+        }
+        .unidad-icon {
+            font-size: 3rem;
+        }
+        .unidad-titulo {
+            flex: 1;
+        }
+        .unidad-titulo h2 {
+            font-family: 'MedievalSharp', cursive;
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .unidad-tipo {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .tipo-infanteria { background: #8b4513; color: #fff; }
+        .tipo-arquero { background: #2e8b57; color: #fff; }
+        .tipo-caballeria { background: #b8860b; color: #fff; }
+        .tipo-asedio { background: #8b0000; color: #fff; }
+        .unidad-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: rgba(139, 105, 20, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #d4af37;
+        }
+        .stat-box strong {
+            color: #FF6900;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .stat-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .stat-box li {
+            padding: 5px 0;
+            color: #f4e4c1;
+            line-height: 1.6;
+        }
+        .stat-box li::before {
+            content: '⚔️';
+            margin-right: 8px;
+        }
+        .fuerte-contra li::before { content: '✅'; color: #2e8b57; }
+        .debil-contra li::before { content: '❌'; color: #8b0000; }
+        .descripcion {
+            background: rgba(139, 105, 20, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #FF6900;
+            margin-top: 15px;
+        }
+        .descripcion p {
+            color: #f4e4c1;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        .consejos {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #d4af37;
+            margin-top: 15px;
+        }
+        .consejos strong {
+            color: #d4af37;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .consejos p {
+            color: #f4e4c1;
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .unidad-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-link {
+                font-size: 1.1rem;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <a class='nav-link' href="{% url 'home' %}">Home</a>
+        
+        <h1>⚔️ Guía Táctica de Unidades ⚔️</h1>
+        
+        <div class='intro'>
+            <p>Domina el campo de batalla conociendo las fortalezas y debilidades de cada unidad.<br>
+            Esta guía te ayudará a elegir la unidad perfecta para cada situación de combate.</p>
+        </div>
+        <!-- INFANTERÍA -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🛡️</div>
+                <div class='unidad-titulo'>
+                    <h2>Milicia / Espadachín / Campeón</h2>
+                    <span class='unidad-tipo tipo-infanteria'>Infantería Pesada</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Edificios</li>
+                        <li>Guerreros Águila</li>
+                        <li>Hostigadores</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Arqueros</li>
+                        <li>Caballería</li>
+                        <li>Catapultas</li>
+                        <li>Escorpiones</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Infantería de línea frontal con alto daño cuerpo a cuerpo. Excelente para destruir edificios y enfrentar unidades ligeras. Lenta pero resistente.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Combina con arqueros para protegerlos de caballería. Evita combates abiertos contra arqueros sin protección.</p>
+            </div>
+        </div>
+        <!-- LANCEROS -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🔱</div>
+                <div class='unidad-titulo'>
+                    <h2>Lancero / Piquero / Alabardero</h2>
+                    <span class='unidad-tipo tipo-infanteria'>Anti-Caballería</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Caballería (EXCELENTE)</li>
+                        <li>Camellos</li>
+                        <li>Elefantes de Guerra</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Arqueros</li>
+                        <li>Espadachines</li>
+                        <li>Catapultas</li>
+                        <li>Arqueros a Caballo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Unidad especializada anti-caballería. Baratos y efectivos, son la pesadilla de los caballeros. Bonus masivo de daño contra unidades montadas.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Siempre ten lanceros disponibles si tu enemigo produce caballería. Son económicos y muy efectivos. Protégelos de arqueros con escaramuzadores.</p>
+            </div>
+        </div>
+        <!-- ARQUEROS -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🏹</div>
+                <div class='unidad-titulo'>
+                    <h2>Arquero / Ballestero</h2>
+                    <span class='unidad-tipo tipo-arquero'>Arquería</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Infantería</li>
+                        <li>Lanceros</li>
+                        <li>Arietes</li>
+                        <li>Monjes</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Escaramuzadores (FATAL)</li>
+                        <li>Caballería</li>
+                        <li>Arqueros a Caballo</li>
+                        <li>Mangoneles</li>
+                        <li>Escorpiones</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Unidad de ataque a distancia versátil. Efectiva en masa contra infantería. Necesita protección frontal y tiene armadura débil.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Mantén arqueros en formación cerrada para maximizar su daño. Protégelos con lanceros al frente contra caballería.</p>
+            </div>
+        </div>
+        <!-- ESCARAMUZADORES -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🎯</div>
+                <div class='unidad-titulo'>
+                    <h2>Escaramuzador</h2>
+                    <span class='unidad-tipo tipo-arquero'>Anti-Arquería</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Arqueros (EXCELENTE)</li>
+                        <li>Arqueros a Caballo</li>
+                        <li>Lanceros</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Caballería</li>
+                        <li>Infantería Pesada</li>
+                        <li>Mangoneles</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Contador perfecto de arqueros. Alta armadura contra proyectiles. Baratos y efectivos para neutralizar masas de arqueros enemigos.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Produce escaramuzadores si tu enemigo hace arqueros en masa. Son el hard counter perfecto.</p>
+            </div>
+        </div>
+        <!-- CABALLERÍA -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🐎</div>
+                <div class='unidad-titulo'>
+                    <h2>Caballero / Paladín</h2>
+                    <span class='unidad-tipo tipo-caballeria'>Caballería Pesada</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Arqueros (EXCELENTE)</li>
+                        <li>Infantería Ligera</li>
+                        <li>Catapultas</li>
+                        <li>Monjes</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Lanceros (FATAL)</li>
+                        <li>Camellos</li>
+                        <li>Monjes con Conversión</li>
+                        <li>Grupos de Alabarderos</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Unidad de élite con alta movilidad y resistencia. Perfecta para raids, perseguir arqueros y destruir catapultas. Costosa en oro.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Usa tu movilidad para flanquear y atacar arqueros por los lados. Retírate si ves lanceros. Perfecto para raids económicos.</p>
+            </div>
+        </div>
+        <!-- CAMELLOS -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🐫</div>
+                <div class='unidad-titulo'>
+                    <h2>Camello / Camello Pesado</h2>
+                    <span class='unidad-tipo tipo-caballeria'>Anti-Caballería</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Caballería (EXCELENTE)</li>
+                        <li>Arqueros a Caballo</li>
+                        <li>Paladines</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Arqueros</li>
+                        <li>Lanceros</li>
+                        <li>Infantería Pesada</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Unidad montada especializada en destruir caballería. Más barata que los caballeros y con bonus contra unidades montadas.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Usa camellos para contrarrestar rushes de caballería enemiga. Más económicos y efectivos que hacer tu propia caballería.</p>
+            </div>
+        </div>
+        <!-- ARQUEROS A CABALLO -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🏇</div>
+                <div class='unidad-titulo'>
+                    <h2>Arquero de Caballería</h2>
+                    <span class='unidad-tipo tipo-arquero'>Caballería Arquera</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Infantería</li>
+                        <li>Lanceros</li>
+                        <li>Catapultas</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Escaramuzadores (FATAL)</li>
+                        <li>Camellos</li>
+                        <li>Guerreros Águila</li>
+                        <li>Caballería Ligera</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Unidad móvil con ataque a distancia. Perfecta para kiting (atacar y retirarse). Difícil de manejar pero devastadora en manos expertas.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Usa su movilidad para atacar y retirarte constantemente. Evita escaramuzadores a toda costa. Excelente para hostigar economía.</p>
+            </div>
+        </div>
+        <!-- MANGONELES -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>💣</div>
+                <div class='unidad-titulo'>
+                    <h2>Mangonel / Onagro</h2>
+                    <span class='unidad-tipo tipo-asedio'>Artillería</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Grupos de Infantería (DEVASTADOR)</li>
+                        <li>Grupos de Arqueros</li>
+                        <li>Edificios</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Caballería</li>
+                        <li>Cualquier unidad rápida</li>
+                        <li>Otras catapultas</li>
+                        <li>Bombardas</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Catapulta de área. Causa daño masivo a grupos de unidades. Lenta y vulnerable, necesita protección. Devastadora en batallas campal.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Siempre protege tus mangoneles con infantería o caballería al frente. Son lentos y fáciles de destruir si quedan expuestos.</p>
+            </div>
+        </div>
+        <!-- ESCORPIONES -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🦂</div>
+                <div class='unidad-titulo'>
+                    <h2>Escorpión</h2>
+                    <span class='unidad-tipo tipo-asedio'>Artillería de Precisión</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Grupos de Infantería en línea</li>
+                        <li>Arqueros en formación</li>
+                        <li>Lanceros</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Caballería</li>
+                        <li>Mangoneles</li>
+                        <li>Bombardas</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Balista gigante que dispara proyectiles que atraviesan múltiples unidades. Efectivo contra formaciones apretadas.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Posiciona escorpiones en ángulo para que sus proyectiles atraviesen la mayor cantidad de enemigos posible. Perfecto contra masas de infantería.</p>
+            </div>
+        </div>
+        <!-- ARIETES -->
+        <div class='unidad-card'>
+            <div class='unidad-header'>
+                <div class='unidad-icon'>🚪</div>
+                <div class='unidad-titulo'>
+                    <h2>Ariete / Ariete Cubierto</h2>
+                    <span class='unidad-tipo tipo-asedio'>Asedio Anti-Edificios</span>
+                </div>
+            </div>
+            <div class='unidad-stats'>
+                <div class='stat-box fuerte-contra'>
+                    <strong>✅ Efectivo Contra:</strong>
+                    <ul>
+                        <li>Edificios (EXCELENTE)</li>
+                        <li>Murallas</li>
+                        <li>Torres</li>
+                        <li>Castillos</li>
+                    </ul>
+                </div>
+                <div class='stat-box debil-contra'>
+                    <strong>❌ Vulnerable A:</strong>
+                    <ul>
+                        <li>Todas las unidades militares</li>
+                        <li>Especialmente infantería</li>
+                    </ul>
+                </div>
+            </div>
+            <div class='descripcion'>
+                <p><strong>Descripción:</strong> Máquina de asedio especializada en destruir edificios. Inútil en combate. Necesita escolta militar para llegar a su objetivo.</p>
+            </div>
+            <div class='consejos'>
+                <strong>💡 Consejo Táctico:</strong>
+                <p>Siempre escolta arietes con ejército. Son lentos y vulnerables. Una infantería puede meterlo dentro para hacerlo más resistente.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

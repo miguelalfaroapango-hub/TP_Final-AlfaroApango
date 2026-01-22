@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civilizaciones</title>
+    <style>
+        body {
+            font-family: 'Bai Jamjuree', 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #3e2723 0%, #5d4037 25%, #4e342e 50%, #5d4037 75%, #3e2723 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Botón Home estilo pergamino */
+        .nav-link {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(145deg, #f4e4c1 0%, #e8d4a8 100%);
+            color: #8b0000;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 10px;
+            border: 3px solid #8b6914;
+            border-left: 8px solid #d4af37;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(139,105,20,0.03) 2px,
+                rgba(139,105,20,0.03) 4px
+            );
+            pointer-events: none;
+            border-radius: 10px;
+        }
+        
+        .nav-link::after {
+            content: '🏰';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            opacity: 0.4;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+            background: linear-gradient(145deg, #fff5d7 0%, #f4e4c1 100%);
+        }
+        
+        .nav-link:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        h1 {
+            color: #ffd700;
+            text-align: center;
+            font-size: 3em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 25px rgba(255,215,0,0.3);
+            margin-bottom: 40px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-bottom: 3px solid #ffd700;
+            padding-bottom: 20px;
+        }
+        
+        /* NUEVO: Estilos del buscador */
+        .search-container {
+            background: linear-gradient(145deg, #f4e4c1 0%, #e8d4a8 100%);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            border: 3px solid #8b6914;
+            border-left: 8px solid #d4af37;
+            position: relative;
+        }
+        
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(139,105,20,0.03) 2px,
+                rgba(139,105,20,0.03) 4px
+            );
+            pointer-events: none;
+            border-radius: 15px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .search-label {
+            color: #8b0000;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 3px solid #8b6914;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.9);
+            color: #3e2723;
+            font-family: 'Bai Jamjuree', serif;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: #fff;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(212,175,55,0.3);
+        }
+        
+        .search-button {
+            padding: 15px 35px;
+            background: linear-gradient(145deg, #d4af37 0%, #b8941f 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        
+        .search-button:hover {
+            background: linear-gradient(145deg, #ffd700 0%, #d4af37 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .search-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .clear-button {
+            padding: 15px 25px;
+            background: linear-gradient(145deg, #8b0000 0%, #6d0000 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+        
+        .clear-button:hover {
+            background: linear-gradient(145deg, #a00000 0%, #8b0000 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .search-result-info {
+            margin-top: 15px;
+            color: #5d4037;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .civilizacion {
+            background: linear-gradient(145deg, #f4e4c1 0%, #e8d4a8 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            border: 3px solid #8b6914;
+            border-left: 8px solid #d4af37;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .civilizacion:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+        
+        .civilizacion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                rgba(139,105,20,0.03) 2px,
+                rgba(139,105,20,0.03) 4px
+            );
+            pointer-events: none;
+            border-radius: 10px;
+        }
+        
+        .civilizacion h2 {
+            color: #8b0000;
+            margin-top: 0;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .civilizacion strong {
+            color: #5d4037;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        .civilizacion p {
+            margin: 12px 0;
+            line-height: 1.8;
+            color: #3e2723;
+            font-size: 1.1em;
+            padding-left: 10px;
+            border-left: 3px solid #d4af37;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 10px;
+            border-radius: 4px;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-top: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            background: rgba(62,39,35,0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+        }
+        
+        .civilizacion::after {
+            content: '⚔️';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            opacity: 0.3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .search-button, .clear-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <a class='nav-link' href="{% url 'home' %}">Home</a>
+        
+        <h1>🏛️ Lista de Civilizaciones 🏛️</h1>
+        
+        <!-- NUEVO: Formulario de búsqueda -->
+        <div class='search-container'>
+            <form method='GET' action='' class='search-form'>
+                <label for='search' class='search-label'>🔍 Buscar:</label>
+                <input 
+                    type='text' 
+                    id='search'
+                    name='nombre' 
+                    class='search-input' 
+                    placeholder='Escribe el nombre de la civilización...'
+                    value='{{ request.GET.nombre }}'
+                    autofocus
+                >
+                <button type='submit' class='search-button'>⚔️ Buscar</button>
+                {% if request.GET.nombre %}
+                    <a href="{% url 'civilizaciones_list' %}" class='clear-button'>✖ Limpiar</a>
+                {% endif %}
+            </form>
+            
+            {% if request.GET.nombre %}
+                <div class='search-result-info'>
+                    📜 Buscando: "{{ request.GET.nombre }}" - Se encontraron {{ civilizaciones|length }} resultado(s)
+                </div>
+            {% endif %}
+        </div>
+        
+        {% if civilizaciones %}
+            {% for civi in civilizaciones %}
+                <div class='civilizacion'>
+                    <h2>{{civi.nombre}}</h2>
+                    <p><strong>⚔️ Unidad Especial:</strong> {{civi.unidad_especial}}</p>
+                    
+                    {% if civi.unidad %}
+                        <p><strong>🛡️ Unidad:</strong> {{civi.unidad}}</p>
+                    {% endif %}
+                    
+                    {% if civi.bonificacion %}
+                        <p><strong>✨ Bonificación:</strong> {{civi.bonificacion}}</p>
+                    {% endif %}
+                    
+                    {% if civi.fortaleza %}
+                        <p><strong>💪 Fortaleza:</strong> {{civi.fortaleza}}</p>
+                    {% endif %}
+                    
+                    {% if civi.debilidades %}
+                        <p><strong>⚠️ Debilidades:</strong> {{civi.debilidades}}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if request.GET.nombre %}
+                <p class='no-data'>❌ No se encontraron civilizaciones con "{{ request.GET.nombre }}"</p>
+            {% else %}
+                <p class='no-data'>No hay civilizaciones registradas aún.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

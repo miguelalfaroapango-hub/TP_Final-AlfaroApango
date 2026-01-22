@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap' rel='stylesheet'>
+    <title>Editar Perfil - Imperio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #3a2a1a 0%, #5c4a3a 50%, #3a2a1a 100%);
+            background-attachment: fixed;
+            color: #f4e4c1;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .edit-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(26, 15, 8, 0.95);
+            border: 4px solid #8b6914;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .edit-container::before,
+        .edit-container::after {
+            content: '✏️';
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.3;
+        }
+        .edit-container::before {
+            top: 15px;
+            left: 15px;
+        }
+        .edit-container::after {
+            bottom: 15px;
+            right: 15px;
+        }
+        .edit-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+        .edit-subtitle {
+            text-align: center;
+            color: #f4e4c1;
+            margin-bottom: 35px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        .decorative-line {
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 20px auto;
+        }
+        .form-label {
+            color: #d4af37;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .medieval-input {
+            background: rgba(244, 228, 193, 0.1) !important;
+            border: 2px solid #8b6914 !important;
+            border-radius: 8px !important;
+            color: #f4e4c1 !important;
+            padding: 12px 15px !important;
+            font-family: 'Cinzel', serif !important;
+            transition: all 0.3s ease !important;
+            width: 100%;
+        }
+        .medieval-input:focus {
+            background: rgba(244, 228, 193, 0.15) !important;
+            border-color: #d4af37 !important;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3) !important;
+            color: #f4e4c1 !important;
+        }
+        .current-avatar {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .current-avatar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            object-fit: cover;
+        }
+        .current-avatar-placeholder {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            background: linear-gradient(135deg, #8b6914, #d4af37);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1a0f08;
+            margin: 0 auto;
+            text-transform: uppercase;
+        }
+        .avatar-label {
+            color: #f4e4c1;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4c1 100%);
+            color: #1a0f08;
+            border: 2px solid #d4af37;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            font-family: 'Cinzel', serif;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #f4e4c1 0%, #d4af37 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+        .btn-cancel {
+            width: 100%;
+            background: rgba(139, 105, 20, 0.3);
+            color: #d4af37;
+            border: 2px solid #8b6914;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .btn-cancel:hover {
+            background: rgba(212, 175, 55, 0.3);
+            color: #f4e4c1;
+            border-color: #d4af37;
+        }
+        .help-text {
+            font-size: 0.8rem;
+            color: rgba(244, 228, 193, 0.6);
+            margin-top: 5px;
+            display: block;
+        }
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 15px 0;
+        }
+        .errorlist li {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        @media (max-width: 576px) {
+            .edit-container {
+                padding: 40px 25px;
+            }
+            .edit-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='edit-container'>
+        <h1 class='edit-title'>✏️ Editar Perfil</h1>
+        <p class='edit-subtitle'>Actualiza tu información</p>
+        <div class='decorative-line'></div>
+        
+        <div class='current-avatar'>
+            {% if user.avatar %}
+                <img src='{{ user.avatar.url }}' alt='Avatar actual'>
+            {% else %}
+                <div class='current-avatar-placeholder'>{{ user.username.0 }}</div>
+            {% endif %}
+            <div class='avatar-label'>Avatar actual</div>
+        </div>
+        
+        <form method='POST' enctype='multipart/form-data'>
+            {% csrf_token %}
+            
+            <div class='mb-3'>
+                <label class='form-label'>Nombre</label>
+                {{ form.first_name }}
+            </div>
+            
+            <div class='mb-3'>
+                <label class='form-label'>Apellido</label>
+                {{ form.last_name }}
+            </div>
+            
+            <div class='mb-3'>
+                <label class='form-label'>Correo Electrónico</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <ul class='errorlist'>
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <div class='mb-3'>
+                <label class='form-label'>País</label>
+                {{ form.pais }}
+            </div>
+            
+            <div class='mb-3'>
+                <label class='form-label'>Dirección</label>
+                {{ form.direccion }}
+            </div>
+            
+            <div class='decorative-line'></div>
+            
+            <div class='mb-3'>
+                <label class='form-label'>Cambiar Foto de Perfil</label>
+                {{ form.avatar }}
+                <small class='help-text'>Selecciona una nueva imagen si quieres cambiar tu avatar</small>
+            </div>
+            
+            <button type='submit' class='btn-submit'>💾 Guardar Cambios</button>
+            <a href='{% url "ver_perfil" %}' class='btn-cancel'>❌ Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

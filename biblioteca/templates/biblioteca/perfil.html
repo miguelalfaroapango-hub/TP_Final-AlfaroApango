@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap' rel='stylesheet'>
+    <title>Mi Perfil - Imperio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #3a2a1a 0%, #5c4a3a 50%, #3a2a1a 100%);
+            background-attachment: fixed;
+            color: #f4e4c1;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .page-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 3rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+        .back-link {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-link a {
+            color: #f4e4c1;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            margin: 0 15px;
+        }
+        .back-link a:hover {
+            color: #d4af37;
+        }
+        .profile-container {
+            background: rgba(26, 15, 8, 0.95);
+            border: 4px solid #8b6914;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9);
+            position: relative;
+        }
+        .profile-container::before,
+        .profile-container::after {
+            content: '⚔';
+            position: absolute;
+            font-size: 2.5rem;
+            color: #d4af37;
+            opacity: 0.3;
+        }
+        .profile-container::before {
+            top: 20px;
+            left: 20px;
+        }
+        .profile-container::after {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(180deg);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .avatar-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d4af37;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+        }
+        .avatar-placeholder-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #d4af37;
+            background: linear-gradient(135deg, #8b6914, #d4af37);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #1a0f08;
+            margin: 0 auto 20px;
+            text-transform: uppercase;
+        }
+        .username-title {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 2.5rem;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        .decorative-line {
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 30px auto;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .info-box {
+            background: rgba(139, 105, 20, 0.2);
+            border: 2px solid #8b6914;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .info-label {
+            font-size: 0.9rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .info-value {
+            font-size: 1.1rem;
+            color: #f4e4c1;
+            word-break: break-word;
+        }
+        .btn-edit {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto 0;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4c1 100%);
+            color: #1a0f08;
+            border: 3px solid #d4af37;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #f4e4c1 0%, #d4af37 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            color: #1a0f08;
+        }
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1 class='page-title'>👤 Mi Perfil</h1>
+        
+        <div class='back-link'>
+            <a href='{% url "home" %}'>← Volver al Imperio</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class='alert alert-success' style='text-align: center; margin-bottom: 20px; border-radius: 8px; border: 2px solid #388e3c; background: rgba(56, 142, 60, 0.2); color: #81c784;'>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <div class='profile-container'>
+            <div class='profile-header'>
+                {% if user.avatar %}
+                    <img src='{{ user.avatar.url }}' alt='Avatar' class='avatar-large'>
+                {% else %}
+                    <div class='avatar-placeholder-large'>{{ user.username.0 }}</div>
+                {% endif %}
+                <h2 class='username-title'>{{ user.username }}</h2>
+            </div>
+            
+            <div class='decorative-line'></div>
+            
+            <div class='info-grid'>
+                <div class='info-box'>
+                    <div class='info-label'>Nombre Completo</div>
+                    <div class='info-value'>
+                        {% if user.first_name or user.last_name %}
+                            {{ user.first_name }} {{ user.last_name }}
+                        {% else %}
+                            No especificado
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class='info-box'>
+                    <div class='info-label'>Correo Electrónico</div>
+                    <div class='info-value'>{{ user.email|default:"No especificado" }}</div>
+                </div>
+                
+                <div class='info-box'>
+                    <div class='info-label'>País</div>
+                    <div class='info-value'>{{ user.pais|default:"No especificado" }}</div>
+                </div>
+                
+                <div class='info-box'>
+                    <div class='info-label'>Dirección</div>
+                    <div class='info-value'>{{ user.direccion|default:"No especificado" }}</div>
+                </div>
+            </div>
+            
+            <div class='decorative-line'></div>
+            
+            <a href='{% url "editar_perfil" %}' class='btn-edit'>✏️ Editar Perfil</a>
+        </div>
+    </div>
+</body>
+</html>
